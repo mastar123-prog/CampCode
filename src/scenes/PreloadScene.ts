@@ -21,6 +21,16 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('tent_piece', 'assets/tent.svg')
     this.load.image('arrow', 'assets/arrow.svg')
 
+    // new mini-game assets
+    this.load.image('fire', 'assets/fire.svg')
+    this.load.image('pan', 'assets/pan.svg')
+    this.load.image('map', 'assets/map.svg')
+    this.load.image('leaf', 'assets/leaf.svg')
+    this.load.image('cliff', 'assets/cliff.svg')
+    this.load.image('zipline', 'assets/zipline.svg')
+    this.load.image('camera', 'assets/camera.svg')
+    this.load.image('cursor', 'assets/cursor.svg')
+
     // small UI icons
     this.load.image('btn', 'assets/button.svg')
 

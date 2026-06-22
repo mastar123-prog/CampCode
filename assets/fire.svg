@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <g>
+    <circle cx="60" cy="60" r="50" fill="#ffcf9f" />
+    <rect x="30" y="40" width="60" height="40" fill="#654" />
+    <text x="60" y="80" font-size="12" text-anchor="middle" fill="#fff">fire</text>
+  </g>
+</svg>

@@ -1,22 +1,35 @@
 # CampCode - Camp mini-game (CampCode game)
 
-This branch adds a Phaser 3 + TypeScript Vite project that provides a basic campsite with three mini-games: Fishing, Tent setup, and Archery. Assets are realistic-looking placeholders in SVG format and free to replace.
+This branch adds a Phaser 3 + TypeScript Vite project that provides a basic campsite with many mini-games and a CursorCamp-like cursor experience.
+
+Implemented mini-games (MVP):
+- Fishing (cast & reel timing)
+- Tent setup (drag pieces)
+- Archery (charge & shoot)
+- Cooking (timed cooking)
+- Orienteering (compass pointing)
+- Foraging (collect safe plants)
+- Climbing (stamina/tap race)
+- Zipline (glide & land)
+- Wildlife Photography (timing & framing)
+
+The UI contains a cursor follower and tooltips inspired by Neal Agarwal's CursorCamp (cursorcamp.neal.fun) to make the map feel interactive. All assets are placeholder SVGs with permissive usage; replace them with CC0/high-detail realistic assets as desired.
 
 Run locally:
 
-1. npm install
-2. npm run dev
-3. Open the URL that Vite prints (usually http://localhost:5173)
+1. git checkout campcode-game
+2. npm install
+3. npm run dev
+4. Open the URL that Vite prints (usually http://localhost:5173)
 
 Notes:
-- This is an MVP. The scenes are basic but fully navigable. Score updates via the UIScene.
-- I used SVG placeholders with permissive usage; replace assets in the assets/ folder with CC0 or other free assets as you like.
-- I will add more realistic free assets and additional mini-games (e.g., cooking, orienteering, zipline) next if you want.
+- Scenes are simple, focused on mechanics. Scoring uses a central UIScene event bus.
+- Assets in the assets/ folder are placeholders. I will replace them with CC0 realistic photos or painted assets on your confirmation.
 
-Next steps I can take (you asked for more mini-games — I can add any or all):
-- Fishing: refine animations, add catch varieties and inventory.
-- Tent: more realistic parts, failure conditions (stability), time-based challenge.
-- Archery: moving targets, scoring ring, wind.
-- New mini-games: Cooking over fire, Orienteering (map & compass), Rock climbing (timed input), Foraging (identify safe plants).
+Next steps I will take after you confirm:
+- Replace SVG placeholders with CC0 realistic assets (I will list sources and licenses).
+- Polish each mini-game with animations, sounds, and better UX (1–2 days total).
+- Add mobile/touch-optimized controls and UI scaling.
+- Create a demo GIF and open a pull request with screenshots and usage notes.
 
-If this initial push looks good, I will proceed to implement additional mini-games and replace placeholders with CC0 realistic assets.
+If you'd like immediate changes, tell me which visual style for the realistic CC0 assets to prioritize (photorealistic photos, high-detail painted illustrations, or realistic stylized sprites) and I will begin swapping assets and polishing gameplay.
