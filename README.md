@@ -1,35 +1,36 @@
-# CampCode - Camp mini-game (CampCode game)
+### Firebase + Multiplayer setup
 
-This branch adds a Phaser 3 + TypeScript Vite project that provides a basic campsite with many mini-games and a CursorCamp-like cursor experience.
+This branch now includes optional Firebase integration for:
+- Authentication (Email/Password)
+- Firestore leaderboard
+- Realtime Database lobby / presence for simple multiplayer lobbies
 
-Implemented mini-games (MVP):
-- Fishing (cast & reel timing)
-- Tent setup (drag pieces)
-- Archery (charge & shoot)
-- Cooking (timed cooking)
-- Orienteering (compass pointing)
-- Foraging (collect safe plants)
-- Climbing (stamina/tap race)
-- Zipline (glide & land)
-- Wildlife Photography (timing & framing)
+How to enable Firebase (local/dev)
+1. Create a Firebase project at https://console.firebase.google.com
+2. Enable Authentication & add Email/Password provider
+3. Create a Firestore database (in your region)
+4. Create a Realtime Database
+5. Copy the project's config values and place them in a `.env` file at the repo root using `.env.example` as a template.
 
-The UI contains a cursor follower and tooltips inspired by Neal Agarwal's CursorCamp (cursorcamp.neal.fun) to make the map feel interactive. All assets are placeholder SVGs with permissive usage; replace them with CC0/high-detail realistic assets as desired.
+.env example (copy `.env.example` -> `.env` and fill values):
+VITE_FIREBASE_API_KEY=...
+VITE_FIREBASE_AUTH_DOMAIN=...
+VITE_FIREBASE_PROJECT_ID=...
+VITE_FIREBASE_STORAGE_BUCKET=...
+VITE_FIREBASE_MESSAGING_SENDER_ID=...
+VITE_FIREBASE_APP_ID=...
+VITE_FIREBASE_DATABASE_URL=...
 
-Run locally:
+Run locally after creating `.env`:
+1. npm install
+2. npm run dev
+3. Open the URL that Vite prints
 
-1. git checkout campcode-game
-2. npm install
-3. npm run dev
-4. Open the URL that Vite prints (usually http://localhost:5173)
+Notes about multiplayer & leaderboards
+- Leaderboard entries are written to Firestore by submitScore(). To prevent abuse you should add security rules to limit writes (e.g., validate score ranges and authenticated users).
+- Lobby/presence uses Realtime Database under /lobbyPlayers and /lobbies. This is a minimal presence system; it can be extended to support matchmaking and real-time state sync.
+- I implemented a local-first accounts flow (guest/local profiles via localStorage) and a basic AuthScene to sign up / sign in with Firebase.
 
-Notes:
-- Scenes are simple, focused on mechanics. Scoring uses a central UIScene event bus.
-- Assets in the assets/ folder are placeholders. I will replace them with CC0 realistic photos or painted assets on your confirmation.
-
-Next steps I will take after you confirm:
-- Replace SVG placeholders with CC0 realistic assets (I will list sources and licenses).
-- Polish each mini-game with animations, sounds, and better UX (1–2 days total).
-- Add mobile/touch-optimized controls and UI scaling.
-- Create a demo GIF and open a pull request with screenshots and usage notes.
-
-If you'd like immediate changes, tell me which visual style for the realistic CC0 assets to prioritize (photorealistic photos, high-detail painted illustrations, or realistic stylized sprites) and I will begin swapping assets and polishing gameplay.
+Security & privacy
+- Do not commit real secrets. Keep `.env` out of source control (it's in .gitignore).
+- If you want server-authoritative score validation, add a small server function (e.g., Cloud Function) to accept validated scores and write to Firestore.
