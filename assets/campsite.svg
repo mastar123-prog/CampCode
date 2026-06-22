@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="768" viewBox="0 0 1024 768">
+  <rect width="100%" height="100%" fill="#2e3b3f" />
+  <g>
+    <ellipse cx="300" cy="560" rx="220" ry="40" fill="#2a5b4d" />
+    <ellipse cx="720" cy="560" rx="220" ry="40" fill="#274e3f" />
+  </g>
+  <g>
+    <rect x="440" y="300" width="160" height="120" fill="#6b4f3b" stroke="#3d2b20" stroke-width="6" rx="10" />
+    <text x="520" y="370" font-size="18" text-anchor="middle" fill="#fff">Campfire</text>
+  </g>
+</svg>
