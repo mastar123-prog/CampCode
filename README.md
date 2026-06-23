@@ -1,36 +1,24 @@
-### Firebase + Multiplayer setup
+### Real-time multiplayer
 
-This branch now includes optional Firebase integration for:
-- Authentication (Email/Password)
-- Firestore leaderboard
-- Realtime Database lobby / presence for simple multiplayer lobbies
+This update implements a real-time game session system on top of Firebase Realtime Database. It includes:
+- createGameSession / joinGameSession / leaveGameSession
+- sendPlayerAction (players write their actions)
+- listenForActions (host reads actions and resolves game state)
+- A sample RealTimeGameScene that demonstrates an archery duel where the host resolves hits and writes authoritative scores.
 
-How to enable Firebase (local/dev)
-1. Create a Firebase project at https://console.firebase.google.com
-2. Enable Authentication & add Email/Password provider
-3. Create a Firestore database (in your region)
-4. Create a Realtime Database
-5. Copy the project's config values and place them in a `.env` file at the repo root using `.env.example` as a template.
+How it works (high level)
+- A player creates a game session. The creator is considered the host and acts as the authoritative server for that session.
+- Players join the session and write actions (e.g., shoot) to their /games/{gameId}/actions/{playerId} node.
+- The host listens for actions, resolves outcomes (hits, scoring), and writes updated state to /games/{gameId}/state.
+- All clients listen for state updates and render accordingly.
 
-.env example (copy `.env.example` -> `.env` and fill values):
-VITE_FIREBASE_API_KEY=...
-VITE_FIREBASE_AUTH_DOMAIN=...
-VITE_FIREBASE_PROJECT_ID=...
-VITE_FIREBASE_STORAGE_BUCKET=...
-VITE_FIREBASE_MESSAGING_SENDER_ID=...
-VITE_FIREBASE_APP_ID=...
-VITE_FIREBASE_DATABASE_URL=...
+Notes & next steps for production-ready play
+- The host-based authoritative model works for small P2P-style games but requires host stability; consider a central server or Cloud Function for authoritative resolution if hosts are unreliable.
+- Implement conflict handling, rate limiting, and validation to prevent cheating.
+- Add player synchronization (positions, animations) for more interactive games; this demo focuses on action->resolution flow.
 
-Run locally after creating `.env`:
-1. npm install
-2. npm run dev
-3. Open the URL that Vite prints
+To test locally
+- Ensure your Firebase `.env` is configured and Realtime Database is created.
+- Start the app and open two browser windows. Create a lobby in one, or directly Start Real-time Game in the lobby scene to create a game and open the RealTimeGameScene.
+- Join the same game from another window using the Join Lobby or joinGameSession flow (you can also directly call the scene with the gameId query param).
 
-Notes about multiplayer & leaderboards
-- Leaderboard entries are written to Firestore by submitScore(). To prevent abuse you should add security rules to limit writes (e.g., validate score ranges and authenticated users).
-- Lobby/presence uses Realtime Database under /lobbyPlayers and /lobbies. This is a minimal presence system; it can be extended to support matchmaking and real-time state sync.
-- I implemented a local-first accounts flow (guest/local profiles via localStorage) and a basic AuthScene to sign up / sign in with Firebase.
-
-Security & privacy
-- Do not commit real secrets. Keep `.env` out of source control (it's in .gitignore).
-- If you want server-authoritative score validation, add a small server function (e.g., Cloud Function) to accept validated scores and write to Firestore.

@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { createLobby, joinLobby, leaveLobby } from '@/services/multiplayerService'
+import { createLobby, joinLobby, leaveLobby, createGameSession } from '@/services/multiplayerService'
 import { auth } from '@/services/firebase'
 
 export default class MultiplayerLobbyScene extends Phaser.Scene {
@@ -19,8 +19,9 @@ export default class MultiplayerLobbyScene extends Phaser.Scene {
     const joinInput = this.add.dom(360, 128, 'input', 'width:220px', '')
     const joinBtn = this.add.text(600, 120, 'Join Lobby', { backgroundColor: '#2b7a78', color: '#fff', padding: { x: 10, y: 6 } }).setInteractive({ useHandCursor: true })
 
-    this.listText = this.add.text(40, 200, 'No lobby
-', { color: '#fff' })
+    const startGameBtn = this.add.text(140, 160, 'Start Real-time Game', { backgroundColor: '#6a4', color: '#fff', padding: { x: 10, y: 6 } }).setInteractive({ useHandCursor: true })
+
+    this.listText = this.add.text(40, 200, 'No lobby\n', { color: '#fff' })
 
     createBtn.on('pointerdown', () => {
       const username = this.getUsername()
@@ -41,6 +42,14 @@ export default class MultiplayerLobbyScene extends Phaser.Scene {
         this.renderPlayers(players)
       })
       this.listText.setText('Joined lobby: ' + id)
+    })
+
+    startGameBtn.on('pointerdown', () => {
+      // create a realtime game and navigate to the real-time game scene
+      const username = this.getUsername()
+      const gameId = createGameSession(this.playerId, { type: 'archery-duel' })
+      // set a local join so the lobby isn't required
+      this.scene.start('RealTimeGameScene', { gameId, playerId: this.playerId })
     })
 
     // leave on ESC
